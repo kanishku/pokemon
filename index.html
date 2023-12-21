@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokemon Details</title>
+</head>
+<body>
+  <div id="pokemon-details">
+    <h1 id="pokemon-name">Pokemon Name</h1>
+    <p id="pokemon-height">Height: </p>
+    <p id="pokemon-weight">Weight: </p>
+    <p id="pokemon-types">Types: </p>
+  </div>
+
+  <script>
+    // Function to fetch Pokemon details from the PokeAPI
+    function fetchPokemonDetails(pokemonName) {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+        .then(response => response.json())
+        .then(data => {
+          // Update HTML elements with fetched data
+          document.getElementById('pokemon-name').innerText = `Name: ${data.name}`;
+          document.getElementById('pokemon-height').innerText = `Height: ${data.height}`;
+          document.getElementById('pokemon-weight').innerText = `Weight: ${data.weight}`;
+
+          const types = data.types.map(type => type.type.name).join(', ');
+          document.getElementById('pokemon-types').innerText = `Types: ${types}`;
+        })
+        .catch(error => {
+          console.error('Error fetching Pokemon details:', error);
+        });
+    }
+
+    // Example: Fetch details for Pikachu
+    fetchPokemonDetails('pikachu');
+  </script>
+</body>
+</html>
